@@ -37,44 +37,6 @@ public class cardDeckGenerator {
 		//Add shuffled to pile
 		drawPile.addAll(deck);
 		
-		
-		//-------------------------------------------------------------------------------------------------------
-		//First Method, didnt like how it came out, felt as if it was bias
-		//Kept it if wanted to be reused later
-		
-//		Map<Integer, Integer> countMap = new HashMap<>();
-//		Random rand = new Random();
-		
-//		//Variables
-//		int min = 1;
-//		int max = 13;
-//		int limitPerNumber = 4;
-//		int totalCards = 52;
-		
-//		for (int i = 0; i < max; i++) {
-//			countMap.put(i + 1, 0);
-//		}
-		
-//		Stack<Integer> drawPile = new Stack<>();
-//		
-//		for (int i = 0; i < max; i++) {
-//			countMap.put(i + 1, 0);
-//		}
-//		
-//		for (int i = 0; i < totalCards; i++) {
-//			int randomNumber = rand.nextInt(max - min + 1) + min;
-//	        int currentValue = countMap.get(randomNumber);
-//	        if (currentValue < limitPerNumber) {
-//	        	drawPile.push(randomNumber);
-//	        	countMap.replace(randomNumber, currentValue + 1);
-//	        } else {
-//	        	//Remove i by 1 to allocate for removal of 
-//	        	i-- ; 
-//	        }
-//		}      
-//		System.out.println(countMap);
-		
-		
 	}
 	
 	/**
@@ -114,3 +76,43 @@ public class cardDeckGenerator {
 		System.out.println( drawPile.toString());
 	}
 }
+
+
+
+
+//-------------------------------------------------------------------------------------------------------
+//First Method, didnt like how it came out, felt as if it was bias
+//Kept it if wanted to be reused later
+
+//Map<Integer, Integer> countMap = new HashMap<>();
+//Random rand = new Random();
+
+////Variables
+//int min = 1;
+//int max = 13;
+//int limitPerNumber = 4;
+//int totalCards = 52;
+
+//for (int i = 0; i < max; i++) {
+//	countMap.put(i + 1, 0);
+//}
+
+//Stack<Integer> drawPile = new Stack<>();
+//
+//for (int i = 0; i < max; i++) {
+//	countMap.put(i + 1, 0);
+//}
+//
+//for (int i = 0; i < totalCards; i++) {
+//	int randomNumber = rand.nextInt(max - min + 1) + min;
+//    int currentValue = countMap.get(randomNumber);
+//    if (currentValue < limitPerNumber) {
+//    	drawPile.push(randomNumber);
+//    	countMap.replace(randomNumber, currentValue + 1);
+//    } else {
+//    	//Remove i by 1 to allocate for removal of 
+//    	i-- ; 
+//    }
+//}      
+//System.out.println(countMap);
+
