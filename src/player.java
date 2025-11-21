@@ -9,10 +9,10 @@ public class player {
 	List<Integer> playerDeck = new ArrayList<>();
 	
 	//List containing match pairs
-	List<Integer> matchedPairs = new ArrayList<>();
+	List<Integer> matchedSets = new ArrayList<>();
 	
 	//Integer counting matching pairs player currently has
-	int totalPairsCount = 0;
+	int totalSetsCount = 0;
 	
 	//Create deck
 	public void createDeckForPlayer() {
@@ -27,6 +27,23 @@ public class player {
 	//Create method to update deck 
 	public void updateDeck() {
 		this.playerDeck.add(cardDeckGenerator.getCard());
+	}
+	
+	//Method to remove set and update accordingly
+	public void removeSet(int card) {
+		//Update Set Count
+		totalSetsCount++;
+		
+		//Clear Set from deck
+		this.playerDeck.removeAll(List.of(card)); 
+		//Note: We can confidently remove all cards of a specific int since we know 
+		//they have all the cards for that game.
+		
+		//Dont see benefit in adding matchedSets, not important for system to know
+		//Will most likely remove :(
+		for (int i = 0; i < 4; i++) {
+			this.matchedSets.add(card);
+		}
 	}
 	
 	//----------------------------------Practice Situational Experiment Code------------------------------------------
@@ -72,6 +89,16 @@ public class player {
 		player2.updateDeck(); //updates deck by grabbing from draw pile 
 		System.out.println(cardDeckGenerator.drawPile.toString()); //displays draw pile after player 2 grabbed a card
 		System.out.println("Player Deck2 is " + player2.playerDeck.toString()); //Display player 2 deck
+		
+		//(Scenario) Player drew a card from draw pile
+		System.out.println("Player drew a card from draw pile ");
+		player2.playerDeck.add(5); //updates deck by grabbing from draw pile 
+		player2.playerDeck.add(5); //updates deck by grabbing from draw pile 
+		player2.playerDeck.add(5); //updates deck by grabbing from draw pile 
+		System.out.println("Player Deck2 is " + player2.playerDeck.toString()); //Display player 2 deck
+		player2.playerDeck.removeAll(List.of(5));
+		System.out.println("Player Deck2 is " + player2.playerDeck.toString()); //Display player 2 deck
+		
 		
 		
 	}
