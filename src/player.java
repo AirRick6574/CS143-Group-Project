@@ -19,9 +19,10 @@ public class player {
 		this.playerDeck = cardDeckGenerator.createDeck(5);
 	}
 	
-	//Create method to remove card
-	public void removeCard(int card) {
-		this.playerDeck.remove(Integer.valueOf(card));
+	//Create method to remove card, return true if
+	//card existed and was removed
+	public boolean removeCard(int card) {
+		return this.playerDeck.remove(Integer.valueOf(card));
 	}
 	
 	//Create method to update deck 
@@ -43,9 +44,14 @@ public class player {
 		//Will most likely remove :(
 		for (int i = 0; i < 4; i++) {
 			this.matchedSets.add(card);
-		}
+		}	
 	}
 	
+	public String displayDeck() {
+		return "Cards: " + playerDeck;
+	}
+	
+
 	//----------------------------------Practice Situational Experiment Code------------------------------------------
 	public static void main(String[] args) {
 		//Create card deck object and pile (will be implemented in main)
@@ -98,6 +104,9 @@ public class player {
 		System.out.println("Player Deck2 is " + player2.playerDeck.toString()); //Display player 2 deck
 		player2.playerDeck.removeAll(List.of(5));
 		System.out.println("Player Deck2 is " + player2.playerDeck.toString()); //Display player 2 deck
+		
+		
+		System.out.println(player2.displayDeck());
 		
 		
 		

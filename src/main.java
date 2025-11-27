@@ -1,11 +1,21 @@
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
 public class main {
 	
 	public static final int setCount = 4;
+	
+	//Variable that represents current turn, start at 0.
+	public static int currentTurn = 0;
+	
+	//public list of players
+	public static player[] players;
+	
+	//Initial initialization of Command Int
+	private static Scanner in = new Scanner(System.in);
 	
 	/*	Create Map to determine if duplicates exist. 
 	 *	Each array element will be transferred to map and its value will be its 
@@ -33,22 +43,118 @@ public class main {
 		System.out.println("NO SETS IN DECK ATM");
 	}
 	
+	public static void rotateTurn() {
+		currentTurn++;
+		
+		//Reset if larger than limit
+		if(currentTurn + 1 > players.length) {
+			currentTurn = 0;
+		}
+	}
+	
+	
 	public static boolean gameOverTF() {
 		return false;
 	}
 	
+	/*
+	 * Cycle Turn Prompts
+	 * TODO: EXTRACT CHECK IF VALID SYSTEM INTO METHOD
+	 */
+	public static void prompts(player[] players) {
+		System.out.println("Player " + (currentTurn + 1));
+		System.out.println(players[currentTurn].displayDeck());
+		
+		int playerInput;
+		int cardInput;
+		
+		//Check prompt to steal from which player
+		while(true) {
+			System.out.println("Which player to steal from?" + " 1 - " + players.length);
+			try {
+				playerInput = in.nextInt() - 1; //Account for 0 index
+				if(playerInput < 0 || playerInput >= players.length ) {
+					System.out.println("Not within range.");
+					continue;
+				}
+				break; //break if condition is correct
+			} catch (InputMismatchException e) {
+				System.out.println("Not valid response");
+				in.nextLine();
+			}			
+		}
+
+		//Check prompt to steal from which player
+		while(true) {
+			System.out.println("What card would you like to steal? 1 - 13");
+			try {
+				cardInput = in.nextInt(); 
+				if(cardInput < 1 || cardInput > 13 ) {
+					System.out.println("Not within range.");
+					continue; //Reset if out of range
+				}
+				break; //break if condition is correct
+			} catch (InputMismatchException e) { //reset if not int
+				System.out.println("Not valid response");
+				in.nextLine();
+			}			
+		}
+		attemptTurn(cardInput, playerInput, players);
+	}
+	
+	public static void attemptTurn(int card, int player, player[] playerlist) {
+		//Attempt yoink, return true if valid
+		boolean attemptResults = playerlist[player].removeCard(card);
+		if (attemptResults == false) {
+			System.out.println("Go Fish");
+			playerlist[currentTurn].updateDeck();
+		}
+	}
+	
+	
 	//Test code
 	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
+		cardDeckGenerator intl = new cardDeckGenerator(); //Create deck object
 		
-        System.out.println("WELCOME TO GO FISH");
-        System.out.println("How many players would you like");
+		System.out.println("WELCOME TO GO FISH");
+		
+		int playerCount = 0;
+		
+		while(true) {
+			try {
+				System.out.println("How many players would you like");
+				playerCount = in.nextInt();
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("Not valid response");
+			}
+			in.nextLine();
+		}
+		
+		//System.out.println(cardDeckGenerator.drawPile.toString());
 
-       try {
-    	   int playerCount = in.nextInt();
-       } catch (InputMismatchException e) {
-    	   System.out.print("Please enter a player count :(");
-       }
+		//Create players based on player count input 
+		//Also create decks for them 
+		players = new player[playerCount];
+		for (int i = 0; i < playerCount; i++) {
+			players[i] = new player();
+			players[i].createDeckForPlayer();
+		}
+		
+		
+	//game Loop will loop while gameOverCheck returns false
+	while (gameOverTF() == false) {
+		System.out.println();
+		
+		//prompt player of choices
+		//and make choice 
+		prompts(players);
+		
+		//rotate turn
+		rotateTurn();
+		
+	}
+
 //		//Create deck by creating object 
 //		cardDeckGenerator intl = new cardDeckGenerator();
 //		
