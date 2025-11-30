@@ -30,6 +30,11 @@ public class player {
 		this.playerDeck.add(cardDeckGenerator.getCard());
 	}
 	
+	//Add card from stolen player
+	public void addCard(int card) {
+		this.playerDeck.add(card);
+	}
+	
 	//Method to remove set and update accordingly
 	public void removeSet(int card) {
 		//Update Set Count

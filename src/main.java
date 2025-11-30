@@ -25,27 +25,26 @@ public class main {
 	 *	LIMIT AT THE MOMENT: CAN ONLY REMOVE ONE PAIR AT A TIME 
 	 *	UPDATE(FIXED) Can check for multiple
 	 */
-	public static void checkMatch(player player) {
+	public static void checkMatch() {
 		Map<Integer, Integer> duplicateCount = new HashMap<>();
 		
-		for(int n : player.playerDeck) {
+		for(int n : players[currentTurn].playerDeck) {
 			//getOrDefault will attempt to find an existing key, will return value if found
 			//otherwise returns 0 if no key found (set default)
 			int count = duplicateCount.getOrDefault(n, 0) + 1; 
 			if(count >= setCount) {
-				System.out.println("Match Found!");
-				player.removeSet(n);
-				checkMatch(player); //Repeat loop to check for more sets
+				System.out.println("Set Found! GO FISH");
+				players[currentTurn].removeSet(n);
+				checkMatch(); //Repeat loop to check for more sets
 				return;
 			}
 			duplicateCount.put(n, count);
 		}
-		System.out.println("NO SETS IN DECK ATM");
+		
 	}
 	
 	public static void rotateTurn() {
 		currentTurn++;
-		
 		//Reset if larger than limit
 		if(currentTurn + 1 > players.length) {
 			currentTurn = 0;
@@ -59,80 +58,65 @@ public class main {
 	
 	/*
 	 * Cycle Turn Prompts
-	 * TODO: EXTRACT CHECK IF VALID SYSTEM INTO METHOD
 	 */
-	public static void prompts(player[] players) {
+	public static void prompts() {
 		System.out.println("Player " + (currentTurn + 1));
 		System.out.println(players[currentTurn].displayDeck());
 		
-		int playerInput;
-		int cardInput;
+		//playerInput
+		int playerInput = (checkMethod(("Which player to steal from?" + " 1 - " + players.length), 1, players.length, true)) - 1;
 		
-		//Check prompt to steal from which player
-		while(true) {
-			System.out.println("Which player to steal from?" + " 1 - " + players.length);
-			try {
-				playerInput = in.nextInt() - 1; //Account for 0 index
-				if(playerInput < 0 || playerInput >= players.length ) {
-					System.out.println("Not within range.");
-					continue;
-				}
-				break; //break if condition is correct
-			} catch (InputMismatchException e) {
-				System.out.println("Not valid response");
-				in.nextLine();
-			}			
+		//Get Card Input (Makes sure within Conditions)
+		int cardInput = checkMethod("What card would you like to steal? 1 - 13", 1, 13, false);
+		
+		//Attempt Turn
+		attemptTurn(cardInput, playerInput);
+	}
+	
+	public static void attemptTurn(int card, int player) {
+		//Attempt yoink, return true if valid
+		boolean attemptResults = players[player].removeCard(card);
+		if (attemptResults == false) {
+			System.out.println("Go Fish");
+			players[currentTurn].updateDeck();
+			return;
 		}
-
-		//Check prompt to steal from which player
+		players[currentTurn].addCard(card);
+	}
+	
+	//Holds unique outputs that will trigger if specific method called it
+	public static int checkMethod(String consoleOutput, int lowerLimit, int upperLimit, boolean specialCondition) {
+		//Intial Prompts
 		while(true) {
-			System.out.println("What card would you like to steal? 1 - 13");
 			try {
-				cardInput = in.nextInt(); 
-				if(cardInput < 1 || cardInput > 13 ) {
+				System.out.println(consoleOutput);
+				int input = in.nextInt();
+				if(input < lowerLimit || input > upperLimit ) {
 					System.out.println("Not within range.");
 					continue; //Reset if out of range
 				}
-				break; //break if condition is correct
-			} catch (InputMismatchException e) { //reset if not int
-				System.out.println("Not valid response");
-				in.nextLine();
-			}			
-		}
-		attemptTurn(cardInput, playerInput, players);
-	}
-	
-	public static void attemptTurn(int card, int player, player[] playerlist) {
-		//Attempt yoink, return true if valid
-		boolean attemptResults = playerlist[player].removeCard(card);
-		if (attemptResults == false) {
-			System.out.println("Go Fish");
-			playerlist[currentTurn].updateDeck();
-		}
-	}
-	
-	
-	//Test code
-	public static void main(String[] args) {
-		cardDeckGenerator intl = new cardDeckGenerator(); //Create deck object
-		
-		System.out.println("WELCOME TO GO FISH");
-		
-		int playerCount = 0;
-		
-		while(true) {
-			try {
-				System.out.println("How many players would you like");
-				playerCount = in.nextInt();
-				break;
+				//Make Sure player is trying to steal from itself
+				if(input - 1 == currentTurn && specialCondition) {
+					System.out.println("Players can't steal from themselves");
+					continue;
+				}
+				return input; //end point 
 			} catch (InputMismatchException e) {
 				System.out.println("Not valid response");
+				in.nextLine();
 			}
-			in.nextLine();
 		}
-		
-		//System.out.println(cardDeckGenerator.drawPile.toString());
+	}
 
+	//Test code
+	public static void main(String[] args) throws InterruptedException {
+		cardDeckGenerator intl = new cardDeckGenerator(); //Create deck object
+
+		System.out.println("WELCOME TO GO FISH");
+		
+		
+		int playerCount = checkMethod("How many players would you like", 1, 6, false);
+		
 		//Create players based on player count input 
 		//Also create decks for them 
 		players = new player[playerCount];
@@ -140,74 +124,26 @@ public class main {
 			players[i] = new player();
 			players[i].createDeckForPlayer();
 		}
-		
-		
-	//game Loop will loop while gameOverCheck returns false
-	while (gameOverTF() == false) {
-		System.out.println();
-		
-		//prompt player of choices
-		//and make choice 
-		prompts(players);
-		
-		//rotate turn
-		rotateTurn();
-		
-	}
 
-//		//Create deck by creating object 
-//		cardDeckGenerator intl = new cardDeckGenerator();
-//		
-//		System.out.println(cardDeckGenerator.drawPile.toString());
-//		
-//		System.out.println();
-//		//Create players 
-//		player player1 = new player(); 
-//		player1.createDeckForPlayer();
-//		System.out.println("Player Deck2 is " + player1.playerDeck.toString());
-//		checkMatch(player1);
-//		for(int i = 0; i < 42; i++) {
-//			player1.updateDeck();
-//		}
-//		
-//		
-//		System.out.println("Player Deck2 is " + player1.playerDeck.toString());
-//		System.out.println(cardDeckGenerator.drawPile.toString());
-//		checkMatch(player1);
-//		System.out.println("Player Deck2 is " + player1.playerDeck.toString());
-//		System.out.println(cardDeckGenerator.drawPile.toString());
-//		System.out.println(player1.totalSetsCount);
-//		
-		
-		
-//		player player2 = new player(); 
-//		player player3 = new player(); 
-//		
-//		player1.createDeckForPlayer();
-//		player2.createDeckForPlayer();
-//		player3.createDeckForPlayer();
-//		
-//		System.out.println(player1.playerDeck);
-//		System.out.println(player2.playerDeck);
-//		System.out.println(player3.playerDeck);
-//		
-//		System.out.println();
-//		
-//		System.out.println(cardDeckGenerator.drawPile.toString());
-//		
-//		//(Scenario) Player drew a card from draw pile
-//		System.out.println("Player drew a card from draw pile ");
-//		System.out.println("Player Deck2 is " + player2.playerDeck.toString()); //Display player 2 deck
-//		player2.playerDeck.add(5); //updates deck by grabbing from draw pile 
-//		player2.playerDeck.add(5); //updates deck by grabbing from draw pile 
-//		checkMatch(player2);
-//		player2.playerDeck.add(5); //updates deck by grabbing from draw pile 
-//		player2.playerDeck.add(5); //updates deck by grabbing from draw pile 
-//		System.out.println("Player Deck2 is " + player2.playerDeck.toString()); //Display player 2 deck
-//		checkMatch(player2);
-//		System.out.println("Player Deck2 is " + player2.playerDeck.toString()); //Display player 2 deck
-		
-		
-		
+
+		//game Loop will loop while gameOverCheck returns false
+		while (gameOverTF() == false) {
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //Clear Console
+			
+			for (int i = 0; i < players.length; i++) {
+				System.out.println(players[i].displayDeck());
+			}
+			//prompt player of choices
+			//and make choice 
+			prompts();
+			
+			Thread.sleep(1000);
+			
+			//Check for match
+			checkMatch();
+			
+			//rotate turn
+			rotateTurn();
+		}
 	}
 }
