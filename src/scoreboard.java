@@ -8,19 +8,29 @@
  */
 public class scoreboard {
 	
-	// use totalSetsCount from the player class as the variable
 	
-	// create a player array filled with the player 1-n player objects
 	// use a toString to grab player data
-	// use a for loop to cycle through player array and compare # of sets to find highestSets
-	
-	// end result is to print rankings highest to lowest and return the highest as winner
 	
 	
-	public static void scoreboardOutput(player[] players) {
-		int[] setTotalOfEachPlayers = new int{6}; 
+	
+	public static void scoreboard(player[] players) {
+		
 		for (int i = 0; i < players.length; i++) {
-			setTotalOfEachPlayers[i] = players[i].getSize();
+			 int highestSetCount;
+			 int setTotalOfEachPlayer[] = players[i].getSize;	// intent is to create an array based off of the 
+			 													// setTotalOfEachPlayer
+			 
+			 if(player.totalSetsCount > highestSetCount) {				// Compare player's set count to the hightestSetCount
+				highestSetCount = player.totalSetsCount;				// and replace the value of highestSetCount
+			 }
+			 
+			 /*
+			  * I want to incorporate a rankings list here before the results would be printed.
+			  */
+			 
+			 
+			System.out.println("!!! WINNER IS "+ );					// Print out !!! Winner Is Player X!!!
+			System.out.println();
 		}
 	}
 	
