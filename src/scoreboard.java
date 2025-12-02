@@ -10,9 +10,9 @@ public class scoreboard {
 	
 	// use totalSetsCount from the player class as the variable
 	
-	// create method that takes totalSetsCount from each player and creates a queue.
-	
-	// what is the most efficient way to rearrange the queue/stack/or array list?
+	// create a player array filled with the player 1-n player objects
+	// use a toString to grab player data
+	// use a for loop to cycle through player array and compare # of sets to find highestSets
 	
 	// end result is to print rankings highest to lowest and return the highest as winner
 	
