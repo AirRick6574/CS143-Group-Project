@@ -130,9 +130,9 @@ public class main {
 		while (gameOverTF() == false) {
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //Clear Console
 			
-			for (int i = 0; i < players.length; i++) {
-				System.out.println(players[i].displayDeck());
-			}
+//			for (int i = 0; i < players.length; i++) {
+//				System.out.println(players[i].displayDeck());
+//			}
 			//prompt player of choices
 			//and make choice 
 			prompts();
