@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 
 /*
@@ -14,6 +15,9 @@ public class player {
 	//Integer counting matching pairs player currently has
 	int totalSetsCount = 0;
 	
+	//Boolean to determine if player can continue playing
+	boolean canPlay = true;
+	
 	//Create deck
 	public void createDeckForPlayer() {
 		this.playerDeck = cardDeckGenerator.createDeck(5);
@@ -27,7 +31,13 @@ public class player {
 	
 	//Create method to update deck 
 	public void updateDeck() {
-		this.playerDeck.add(cardDeckGenerator.getCard());
+		try {
+			this.playerDeck.add(cardDeckGenerator.getCard());
+		} catch (EmptyStackException e) {
+			//Set empty deck to true
+			System.out.println("Draw Pile is empty");
+			cardDeckGenerator.emptyDeck = true; 
+		}
 	}
 	
 	//Add card from stolen player
@@ -56,11 +66,21 @@ public class player {
 		return "Cards: " + playerDeck;
 	}
 	
+	public void checkCanPlay() {
+		if (canPlay == false) { //condition to ignore print statement
+			return;
+		}
+		else if (cardDeckGenerator.emptyDeck && playerDeck.size() == 0) {
+			System.out.println("You can no longer play");
+			canPlay = false;
+		}
+	}
+	
 
 	//----------------------------------Practice Situational Experiment Code------------------------------------------
 	public static void main(String[] args) {
 		//Create card deck object and pile (will be implemented in main)
-		cardDeckGenerator intl = new cardDeckGenerator();
+		//cardDeckGenerator intl = new cardDeckGenerator();
 		
 		//Player 1 Object
 		player player1 = new player(); 

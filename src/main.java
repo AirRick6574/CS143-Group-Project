@@ -51,15 +51,32 @@ public class main {
 		}
 	}
 	
-	
-	public static boolean gameOverTF() {
-		return false;
+	//Will check if game is over and return true if game is over
+	//Game is over if deck is empty and every player runs out of cards
+	public static boolean gameOverCheck() {
+	    return cardDeckGenerator.drawPile.isEmpty() && allPlayersEmpty();
 	}
+	
+	//Helper method to check if every player has an empty deck
+	public static boolean allPlayersEmpty() {
+	    for (player p : players) {
+	        if (!p.playerDeck.isEmpty()) {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+		
 	
 	/*
 	 * Cycle Turn Prompts
 	 */
 	public static void prompts() {
+		//Base Condition, check if player can play, otherwise ignore.
+		if (!players[currentTurn].canPlay) {
+			return;
+		}
+		
 		System.out.println("Player " + (currentTurn + 1));
 		System.out.println(players[currentTurn].displayDeck());
 		
@@ -72,6 +89,7 @@ public class main {
 		//Attempt Turn
 		attemptTurn(cardInput, playerInput);
 	}
+	
 	
 	public static void attemptTurn(int card, int player) {
 		//Attempt yoink, return true if valid
@@ -110,7 +128,7 @@ public class main {
 
 	//Test code
 	public static void main(String[] args) throws InterruptedException {
-		cardDeckGenerator intl = new cardDeckGenerator(); //Create deck object
+		//cardDeckGenerator intl = new cardDeckGenerator(); //Create deck object
 
 		System.out.println("WELCOME TO GO FISH");
 		
@@ -127,23 +145,37 @@ public class main {
 
 
 		//game Loop will loop while gameOverCheck returns false
-		while (gameOverTF() == false) {
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //Clear Console
+		while (gameOverCheck() == false) {
+			//Check to see if player can continue playing
+			players[currentTurn].checkCanPlay();
 			
-//			for (int i = 0; i < players.length; i++) {
-//				System.out.println(players[i].displayDeck());
-//			}
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+					+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); 
+			//Create illusion of console being cleared
+			
+			for (int i = 0; i < players.length; i++) {
+				System.out.println(players[i].displayDeck());
+			}
+			
+			System.out.println(cardDeckGenerator.drawPile);
+			
 			//prompt player of choices
 			//and make choice 
 			prompts();
-			
-			Thread.sleep(1000);
 			
 			//Check for match
 			checkMatch();
 			
 			//rotate turn
 			rotateTurn();
+			
+			//Include delay so player can read input before reset
+			Thread.sleep(1000); 
 		}
+		
+		//Post game Loop
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+				+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); 
+		System.out.println("GAME OVER");
 	}
 }

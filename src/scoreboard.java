@@ -13,26 +13,26 @@ public class scoreboard {
 	
 	
 	
-	public static void scoreboard(player[] players) {
-		
-		for (int i = 0; i < players.length; i++) {
-			 int highestSetCount;
-			 int setTotalOfEachPlayer[] = players[i].getSize;	// intent is to create an array based off of the 
-			 													// setTotalOfEachPlayer
-			 
-			 if(player.totalSetsCount > highestSetCount) {				// Compare player's set count to the hightestSetCount
-				highestSetCount = player.totalSetsCount;				// and replace the value of highestSetCount
-			 }
-			 
-			 /*
-			  * I want to incorporate a rankings list here before the results would be printed.
-			  */
-			 
-			 
-			System.out.println("!!! WINNER IS "+ );					// Print out !!! Winner Is Player X!!!
-			System.out.println();
-		}
-	}
+//	public static void scoreboard(player[] players) {
+//		
+//		for (int i = 0; i < players.length; i++) {
+//			 int highestSetCount;
+//			 int setTotalOfEachPlayer[] = players[i].getSize;	// intent is to create an array based off of the 
+//			 													// setTotalOfEachPlayer
+//			 
+//			 if(player.totalSetsCount > highestSetCount) {				// Compare player's set count to the hightestSetCount
+//				highestSetCount = player.totalSetsCount;				// and replace the value of highestSetCount
+//			 }
+//			 
+//			 /*
+//			  * I want to incorporate a rankings list here before the results would be printed.
+//			  */
+//			 
+//			 
+//			System.out.println("!!! WINNER IS " + );					// Print out !!! Winner Is Player X!!!
+//			System.out.println();
+//		}
+//	}
 	
 	
 	/**

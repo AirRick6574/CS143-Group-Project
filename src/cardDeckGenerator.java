@@ -13,15 +13,18 @@ public class cardDeckGenerator {
 	//Draw pile
 	public static Stack<Integer> drawPile = new Stack<>();
 	
+	//Is deck Still available
+	public static boolean emptyDeck = false;
+	
 	/**
 	 * System will label the following
 	 * Jack = 11
 	 * Queen == 12
 	 * King == 13
 	 * 
-	 * Constructor that will create a draw pile that is randomized with all cards needed for game
+	 * Static that will create a draw pile that is randomized with all cards needed for game
 	 */
-	public cardDeckGenerator(){
+	static{
 
 		List<Integer> deck = new ArrayList<>();
 		
