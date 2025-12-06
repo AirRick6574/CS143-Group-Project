@@ -282,15 +282,16 @@ public class MainGame {
 			//-------------------DEBUG CODE DISPLAY TEXT------------------------------
 			//(Comment Out debug Code and game will behave normally 
 			for (int i = 0; i < players.length; i++) {
-				System.out.println(players[i].displayDeck());
+				System.out.println("PLayer " + (i + 1) + 
+						": "+ players[i].displayDeck());
 			}
+			System.out.println("Current Draw Pile: " + cardDeckGenerator.drawPile + '\n');
 			
 			//Debug NOTE (If testing with debug text displayed and one of the players
 			//is out of cards, it wont let the player play as expected but will still
 			//print out debug code. This is a quirk of the debug display code and the
 			//game loop.)
 			
-			System.out.println(cardDeckGenerator.drawPile);
 			
 			//-----DEBUG CODE GIVE EVERYONE MORE CARDS (Speeds up game to test)-------
 			if (debugCount <= 17) {
