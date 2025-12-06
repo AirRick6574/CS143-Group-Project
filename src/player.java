@@ -9,9 +9,6 @@ public class player {
 	//Player Deck Array
 	List<Integer> playerDeck = new ArrayList<>();
 	
-	//List containing match pairs
-	List<Integer> matchedSets = new ArrayList<>();
-	
 	//Integer counting matching pairs player currently has
 	int totalSetsCount = 0;
 	
@@ -30,13 +27,16 @@ public class player {
 	}
 	
 	//Create method to update deck 
-	public void updateDeck() {
+	public int updateDeck() {
 		try {
-			this.playerDeck.add(cardDeckGenerator.getCard());
-		} catch (EmptyStackException e) {
+			int card = cardDeckGenerator.getCard();
+			this.playerDeck.add(card);
+			return card; //return card to check if draw matched player input steal
+		} catch (EmptyStackException e) { //Creates exception to prevent card from being added
 			//Set empty deck to true
 			System.out.println("Draw Pile is empty");
 			cardDeckGenerator.emptyDeck = true; 
+			return -1;
 		}
 	}
 	
@@ -52,14 +52,6 @@ public class player {
 		
 		//Clear Set from deck
 		this.playerDeck.removeAll(List.of(card)); 
-		//Note: We can confidently remove all cards of a specific int since we know 
-		//they have all the cards for that game.
-		
-		//Dont see benefit in adding matchedSets, not important for system to know
-		//Will most likely remove :(
-		for (int i = 0; i < 4; i++) {
-			this.matchedSets.add(card);
-		}	
 	}
 	
 	public String displayDeck() {

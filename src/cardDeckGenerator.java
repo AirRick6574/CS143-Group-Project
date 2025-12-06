@@ -25,9 +25,8 @@ public class cardDeckGenerator {
 	 * Static that will create a draw pile that is randomized with all cards needed for game
 	 */
 	static{
-
 		List<Integer> deck = new ArrayList<>();
-		
+	
 		for (int i = 1; i <= 13; i++) {
 			for(int j = 0; j < 4; j++) {
 				deck.add(i);
@@ -38,8 +37,7 @@ public class cardDeckGenerator {
 		Collections.shuffle(deck);
 		
 		//Add shuffled to pile
-		drawPile.addAll(deck);
-		
+		drawPile.addAll(deck);	
 	}
 	
 	/**
@@ -64,7 +62,6 @@ public class cardDeckGenerator {
 		for (int i = 0; i < deckSize; i++) {
 			deck.add(getCard());
 		}
-		
 		return deck;
 	}
 	
@@ -79,8 +76,6 @@ public class cardDeckGenerator {
 		System.out.println( drawPile.toString());
 	}
 }
-
-
 
 
 //-------------------------------------------------------------------------------------------------------
