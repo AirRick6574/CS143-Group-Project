@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"cardDeckGenerator"},{"p":"<Unnamed>","l":"MainGame"},{"p":"<Unnamed>","l":"player"},{"p":"<Unnamed>","l":"scoreboard"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"cardDeckGenerator"},{"p":"<Unnamed>","l":"MainGame"},{"p":"<Unnamed>","l":"player"}];updateSearchResults();

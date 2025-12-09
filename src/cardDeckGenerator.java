@@ -3,10 +3,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 
 public class cardDeckGenerator {
 	

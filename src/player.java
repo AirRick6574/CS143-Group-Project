@@ -58,12 +58,13 @@ public class player {
 		return "Cards: " + playerDeck;
 	}
 	
-	public void checkCanPlay() {
+	public void checkCanPlay() throws InterruptedException {
 		if (canPlay == false) { //condition to ignore print statement
 			return;
 		}
 		else if (cardDeckGenerator.emptyDeck && playerDeck.size() == 0) {
 			System.out.println("You can no longer play");
+			Thread.sleep(1000); 
 			canPlay = false;
 		}
 	}

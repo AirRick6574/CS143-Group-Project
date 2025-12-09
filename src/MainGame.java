@@ -1,7 +1,12 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * MainGame serves as the core controller for the Go Fish program. 
@@ -246,6 +251,32 @@ public class MainGame {
 		}
 	}
 	
+	/**
+	 * Prints a formatted scoreboard showing each player's total set count, ordered
+	 * from highest to lowest. 
+	 * 
+	 * <p>
+	 * This method iterates through every single possible score values ranging from 13 to 0
+	 * while checking to see if a player if their {@code totalSetCount} matches the current score. 
+	 * Matching players are then printed one by one by highest to lowest.
+	 * </p>
+	 * 
+	 * (This method uses a nested loop, I try to stray away from nested loops for the most part
+	 * but felt fine using here since the scoreboard only needs to print out once per game on a 
+	 * relatively small list)
+	 */
+	public static void scoreboard() {
+		System.out.println("Scoreboard: ");
+		//Loop Through Score Limits (Highest Score possible is 13) 
+		for (int score = 13; score > -1; score--) { 
+			for (int j = 0; j < players.length; j++) { //Loop through players and match set
+				if (players[j].totalSetsCount == score) {
+					System.out.println("\tPlayer " + (j + 1) + ": " + players[j].totalSetsCount);
+				}
+			}
+		}
+	}
+	
 	
 	public static void main(String[] args) throws InterruptedException {
 		//------------------Intial Prompts----------------------------
@@ -279,29 +310,42 @@ public class MainGame {
 					+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 					+ "\n\n\n\n\n\n\n\n\n\n\n\n"); 
 			
+			
+			//XXX //Debug Code was kept in code for quick testing
 			//-------------------DEBUG CODE DISPLAY TEXT------------------------------
-			//(Comment Out debug Code and game will behave normally 
-			for (int i = 0; i < players.length; i++) {
-				System.out.println("PLayer " + (i + 1) + 
-						": "+ players[i].displayDeck());
-			}
-			System.out.println("Current Draw Pile: " + cardDeckGenerator.drawPile + '\n');
+			
+//			for (int i = 0; i < players.length; i++) {
+//				System.out.println("PLayer " + (i + 1) + 
+//						": "+ players[i].displayDeck());
+//			}
+//			System.out.println("Current Draw Pile: " + cardDeckGenerator.drawPile + '\n');
 			
 			//Debug NOTE (If testing with debug text displayed and one of the players
 			//is out of cards, it wont let the player play as expected but will still
-			//print out debug code. This is a quirk of the debug display code and the
+			//print out debug code on their turn. This is a quirk of the debug display code and the
 			//game loop.)
 			
-			
+			//XXX //Debug Code was kept in code for quick testing
 			//-----DEBUG CODE GIVE EVERYONE MORE CARDS (Speeds up game to test)-------
-			if (debugCount <= 17) {
-				debugCount++;
-				players[currentTurn].updateDeck();
-				rotateTurn();
-				continue;
-			}
-			//-------------------------------------------------------------------------
+//			if (debugCount <= 19) {
+//				debugCount++;
+//				players[currentTurn].updateDeck();
+//				rotateTurn();
+//				continue;
+//			}
 			
+			///XXX //Debug Code was kept in code for quick testing
+			//-----DEBUG CODE TEST SCOREBOARD-----------------------------------------
+//			players[0].totalSetsCount = 5; //2
+//			players[1].totalSetsCount = 2; //5
+//			players[2].totalSetsCount = 1; //6
+//			players[3].totalSetsCount = 8; //1
+//			players[4].totalSetsCount = 4; //3
+//			players[5].totalSetsCount = 2; //4
+//
+//			scoreboard();
+			
+			//-------------------------------------------------------------------------
 			//prompt player of choices
 			//and make choice 
 			boolean drawOutcome = prompts();
@@ -324,6 +368,7 @@ public class MainGame {
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 				+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 				+ "\n\n\n\n\n\n\n\n\n\n\n\n"); 
-		System.out.println("GAME OVER");
+		System.out.println("GAME OVER\n");
+		scoreboard();
 	}
 }
